@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html class="no-js" ng-app="Burndown">
+    <head>
+        <title>Admin Home Page</title>
+        <link href="/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="/vendors/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+        <link href="/assets/styles.css" rel="stylesheet" media="screen">
+        <link href="/assets/burndown.css" rel="stylesheet" type="text/css" />
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <script src="vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-resource.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-cookies.js"></script>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+          google.load('visualization', '1', {packages: ['corechart']});
+        </script>
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="http://code.highcharts.com/modules/exporting.js"></script>
+        <script src="/assets/github.js"></script>
+        <script src="/assets/burndown.js"></script>
+        <base href="/">
+    </head>
+    
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">Burndown</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown" onclick="return false;"><img class="user-avatar" src="{{user.avatar_url}}" alt="" /> {{user.name}}<i class="caret"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li></li>
+                                    <li>
+                                        <a tabindex="-1" href="login.html">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!--ul class="nav">
+                            <li class="active">
+                                <a href="#">Dashboard</a>
+                            </li>
+                        </ul-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12" id="content">
+                    <div ng-view></div>
+                </div>
+            </div>
+            <hr>
+            <footer></footer>
+        </div>
+        <script src="/vendors/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/scripts.js"></script>
+    </body>
+</html>
