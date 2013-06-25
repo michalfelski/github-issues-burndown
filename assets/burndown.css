@@ -1,2 +1,13 @@
 td.default {color: #cccccc}
 .user-avatar {max-width: 30px !important; border-radius: 3px; margin-right: 5px;}
+table.heading {width: 100%}
+table.heading td:nth-child(2) {text-align: center}
+table.heading td:last-child {text-align: right}
+
+@media (max-width: 979px) {
+  body {padding: 0}
+}
+
+@media (max-width: 767px) {
+  .navbar-fixed-top {margin: 0 0 10px}
+}

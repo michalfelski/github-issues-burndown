@@ -96,15 +96,10 @@ function MainCtrl($scope, $routeParams, Issue, Milestone) {
           pointSize: 3,
           title : currentMilestone.title,
           vAxis: {
-            title: "Hours",
+            title: "Hours"
           },
           hAxis: {
-            format: 'MMM d',
-            gridlines: {
-              count: 6
-            }
-            //minValue: new Date(currentMilestone.created_at),
-            //maxValue: maxDate
+            format: 'MMM d'
           },
           legend: {
             position: 'none'
@@ -128,59 +123,6 @@ function MainCtrl($scope, $routeParams, Issue, Milestone) {
 
         var chart = new google.visualization.ComboChart($('.' + repo + ' .graph').get(0));
         chart.draw(data, options);
-        /*
-        $('.' + repo + ' .graph').highcharts({
-          credits: {
-            enabled: false
-          },
-          title: {
-            text: currentMilestone.title
-          },
-          xAxis: {
-            type: 'datetime',
-            showLastLabel: true,
-            tickPosition: 'inside',
-            tickmarkPlacement: 'on'
-          },
-          yAxis: {
-            title: {
-              text: 'Hours'
-            }
-          },
-          series: [
-            {
-              pointInterval: 24 * 3600 * 1000,
-              pointStart: (new Date(currentMilestone.created_at)).getTime(),
-              type: 'column',
-              name: 'closed',
-              data: closed
-            }, {
-              pointInterval: 24 * 3600 * 1000,
-              pointStart: (new Date(currentMilestone.created_at)).getTime(),
-              type: 'line',
-              name: 'Plan',
-              data: plan,
-              color: '#ccc',
-              marker: {
-                enabled: false
-              }
-            }, {
-              pointInterval: 24 * 3600 * 1000,
-              pointStart: (new Date(currentMilestone.created_at)).getTime(),
-              type: 'spline',
-              name: 'Remaining',
-              data: remaining,
-              color: 'black',
-              marker: {
-              	lineWidth: 2,
-              	lineColor: Highcharts.getOptions().colors[3],
-                radius: 2,
-              	fillColor: 'white',
-                symbol: 'circle'
-              }
-            }]
-        });
-        */
       });
     });
   });
