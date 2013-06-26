@@ -3,6 +3,7 @@ td.default {color: #cccccc}
 table.heading {width: 100%}
 table.heading td:nth-child(2) {text-align: center}
 table.heading td:last-child {text-align: right}
+.show .graph {height: 400px}
 
 @media (max-width: 979px) {
   body {padding: 0}
