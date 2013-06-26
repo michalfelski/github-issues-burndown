@@ -106,7 +106,7 @@ function MainCtrl($scope, $routeParams, Issue, Milestone) {
             left: '5%',
             top: 6,
             width: '90%',
-            height: '90%',
+            height: '85%',
           },
           pointSize: 3,
           title : currentMilestone.title,
