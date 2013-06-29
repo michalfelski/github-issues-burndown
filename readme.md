@@ -19,4 +19,4 @@ You can specify estimation time for each issue. Just put in issue body: 'Estimat
 Default value is 4h
 
 You can specify milestone/sprint start date. Default it is a milestone create date. 
-To change start date put 'Started at 2013-06-23' in milestone description.
+To change start date put 'Started on 2013-06-23' in milestone description.

@@ -37,7 +37,7 @@ angular.module('Github', ['ngResource'])
   );
   Milestone.prototype.startedAt = function() {
     var timestamp;
-    var matches = this.description.match(/started at(:?\s*)([\d\s-.\/]+)/i);
+    var matches = this.description.match(/started (?:at|on)(:?\s*)([\d\s-.\/]+)/i);
     var date = matches && matches[2] && isNaN(timestamp = Date.parse(matches[2])) == false && timestamp < new Date(this.due_on).getTime() ? new Date(timestamp) : new Date(this.created_at);
     date.setHours(0);
     date.setMinutes(0);
