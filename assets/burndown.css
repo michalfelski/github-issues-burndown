@@ -3,7 +3,10 @@ td.default {color: #cccccc}
 table.heading {width: 100%}
 table.heading td:nth-child(2) {text-align: center}
 table.heading td:last-child {text-align: right}
-.show .graph {height: 400px}
+#graph {height: 400px}
+.repo {margin: 0 10px 10px !important}
+.repo .graph {height: 200px}
+.block-header div {overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%}
 
 @media (max-width: 979px) {
   body {padding: 0}

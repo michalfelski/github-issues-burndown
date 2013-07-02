@@ -1,13 +1,20 @@
 <div class="row-fluid show">
-  <div class="block span12 {{repo}}">
+  <div class="pull-right">
+    <a href="https://github.com/{{graph.owner}}/{{graph.repo}}/issues?milestone={{graph.milestone.number}}&state=open" class="btn" target="_blank"><i class="icon-search"></i> View in GitHub</a>
+    <a class="btn" ng-class="{true: 'btn-danger', false: 'btn-primary'}[onDashboard]" ng-click="toggleDashboard()"><i ng-class="{true: 'icon-remove', false: 'icon-share'}[onDashboard]"></i> {{!onDashboard && 'Add to dashboard' || 'Remove from dashboard'}}</a>
+  </div>
+</div>
+
+<div class="row-fluid show">
+  <div class="block span12">
     <div class="navbar navbar-inner block-header">
-      <div class="muted pull-left">{{repo}}</div>
+      <div class="muted pull-left">{{graph.repo}}/{{graph.milestone.title}}</div>
     </div>
     <div class="block-content collapse in" >
-      <p>{{milestone.description}}</p>
-      <p>Milestone time: {{milestone.created_at | date:'fullDate'}} - {{milestone.due_on | date:'fullDate'}}</p>
-      <p>Issues {{milestone.closed_issues}} / {{milestone.open_issues + milestone.closed_issues}}</p>
-      <div class="graph"></div>
+      <p>{{graph.milestone.description}}</p>
+      <p>Milestone time: {{graph.milestone.created_at | date:'fullDate'}} - {{graph.milestone.due_on | date:'fullDate'}}</p>
+      <p>Issues {{graph.milestone.closed_issues}} / {{graph.milestone.open_issues + graph.milestone.closed_issues}}</p>
+      <div id="graph"></div>
     </div>
   </div>
 </div>

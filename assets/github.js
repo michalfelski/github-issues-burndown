@@ -1,4 +1,31 @@
-angular.module('Github', ['ngResource'])
+angular.module('GitHub', ['ngResource'])
+.factory('Organization', function($resource, $cookies) {
+  var Organization = $resource(
+    'https://api.github.com/user/orgs',
+    {
+      access_token: $cookies.token,
+    }
+  );
+  return Organization;
+})
+.factory('UserRepository', function($resource, $cookies) {
+  var UserRepository = $resource(
+    'https://api.github.com/user/repos',
+    {
+      access_token: $cookies.token,
+    }
+  );
+  return UserRepository;
+})
+.factory('OrganizationRepository', function($resource, $cookies) {
+  var OrganizationRepository = $resource(
+    'https://api.github.com/orgs/:org/repos',
+    {
+      access_token: $cookies.token,
+    }
+  );
+  return OrganizationRepository;
+})
 .factory('User', function($resource, $cookies) {
   var User = $resource(
     'https://api.github.com/user',
@@ -28,10 +55,8 @@ angular.module('Github', ['ngResource'])
 })
 .factory('Milestone', function($resource, $cookies) {
   var Milestone = $resource(
-    'https://api.github.com/repos/:owner/:repo/milestones',
+    'https://api.github.com/repos/:owner/:repo/milestones/:number',
     {
-      owner: 'GForces-UK',
-      repo: 'netdirector-auto',
       access_token: $cookies.token
     }
   );
@@ -45,5 +70,4 @@ angular.module('Github', ['ngResource'])
     return date;
   }
   return Milestone;
-  
 });
