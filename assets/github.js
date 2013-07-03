@@ -12,7 +12,7 @@ angular.module('GitHub', ['ngResource'])
   var UserRepository = $resource(
     'https://api.github.com/user/repos',
     {
-      access_token: $cookies.token,
+      access_token: $cookies.token
     }
   );
   return UserRepository;
@@ -21,7 +21,7 @@ angular.module('GitHub', ['ngResource'])
   var OrganizationRepository = $resource(
     'https://api.github.com/orgs/:org/repos',
     {
-      access_token: $cookies.token,
+      access_token: $cookies.token
     }
   );
   return OrganizationRepository;
@@ -30,7 +30,7 @@ angular.module('GitHub', ['ngResource'])
   var User = $resource(
     'https://api.github.com/user',
     {
-      access_token: $cookies.token,
+      access_token: $cookies.token
     }
   );
   return User;
@@ -39,9 +39,7 @@ angular.module('GitHub', ['ngResource'])
   var Issue = $resource(
     'https://api.github.com/repos/:owner/:repo/issues',
     {
-      owner: 'GForces-UK',
-      repo: 'netdirector-auto',
-      access_token: $cookies.token,
+      access_token: $cookies.token
     }
   );
   Issue.prototype.hasDefaultEstimation = function() {

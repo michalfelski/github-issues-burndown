@@ -26,6 +26,7 @@ app.run(function($cookies, $http, $rootScope, User, Organization, UserRepository
   $rootScope.repositories = {};
   UserRepository.query({}, function(repos) {
     $(repos).each(function(index, repo) {
+      if (!repo.has_issues) return;
       Milestone.query({owner: repo.owner.login, repo: repo.name}, function(milestones) {
         $(milestones).each(function(index,milestone) {
           $rootScope.repositories[repo.owner.login] = $rootScope.repositories[repo.owner.login] || {};
@@ -38,10 +39,11 @@ app.run(function($cookies, $http, $rootScope, User, Organization, UserRepository
   Organization.query({}, function(orgs) {
     $(orgs).each(function(index, org) {
       OrganizationRepository.query({org: org.login}, function(repos) {
-        $rootScope.repositories[org.login] = {};
         $(repos).each(function(index, repo) {
+          if (!repo.has_issues) return;
           Milestone.query({owner: org.login, repo: repo.name}, function(milestones) {
             $(milestones).each(function(index,milestone) {
+              $rootScope.repositories[org.login] = $rootScope.repositories[org.login] || {};
               $rootScope.repositories[org.login][repo.name] = $rootScope.repositories[org.login][repo.name] || {};
               $rootScope.repositories[org.login][repo.name][milestone.number] = milestone.title;
             })
@@ -66,16 +68,21 @@ function MainCtrl($scope, Issue, Milestone) {
     var owner = graph.split('/')[0];
     var repo = graph.split('/')[1];
     var number = graph.split('/')[2];
-    var graph = {
-      milestone: Milestone.get({owner: owner, repo: repo, number: number}),
-      repo: repo,
-      owner: owner
-    }
-    if ($scope.graphs[$scope.graphs.length - 1].length == itemsPerRow) $scope.graphs.push([]);
-    $scope.graphs[$scope.graphs.length - 1].push(graph);
-    setTimeout(function() {
-      app.graph(document.getElementById('graph-' + index), graph, $scope, Issue);
-    }, 1000)
+    Milestone.get({owner: owner, repo: repo, number: number}, function(m) {
+      var graph = {
+        milestone: m,
+        repo: repo,
+        owner: owner
+      }
+      if ($scope.graphs[$scope.graphs.length - 1].length == itemsPerRow) $scope.graphs.push([]);
+      $scope.graphs[$scope.graphs.length - 1].push(graph);
+      var appGraph = function () {
+        app.graph(document.getElementById('graph-' + index), graph, $scope, Issue);
+      };
+      setTimeout(function() {
+        $scope.$$phase ? appGraph() : $scope.$apply(appGraph);
+      }, 1000);
+    });
   });
 }
 
@@ -109,7 +116,7 @@ app.graph = function(element, graph, $scope, Issue) {
   var dueDate = (new Date(graph.milestone.due_on)).dateOnly();
   var minDate = graph.milestone.startedAt();
   var startDate = graph.milestone.startedAt();
-  Issue.query({milestone: graph.milestone.number, per_page: 1000, state: 'closed', repo: graph.repo}, function(issues) {
+  Issue.query({owner: graph.owner, milestone: graph.milestone.number, per_page: 1000, state: 'closed', repo: graph.repo}, function(issues) {
     $(issues).each(function(index, issue) {
       var closedDate = (new Date(issue.closed_at)).dateOnly();
       var key = closedDate.getTime();
@@ -119,21 +126,20 @@ app.graph = function(element, graph, $scope, Issue) {
       if (closedDate.getTime() < minDate.getTime()) minDate = new Date(closedDate.getTime() - 24 * 3600 * 1000);;
       maxHours += issue.estimationTime();
     });
-    
-    $scope.openIssues = Issue.query({milestone: graph.milestone.number, per_page: 1000, state: 'open', repo: graph.repo}, function(issues) {
+    $scope.openIssues = Issue.query({owner: graph.owner, milestone: graph.milestone.number, per_page: 1000, state: 'open', repo: graph.repo}, function(issues) {
       $(issues).each(function(index, issue) {
         maxHours += issue.estimationTime();
       });
-      
+    
       var workDays = 0;
       var currentDate = new Date(startDate.getTime() + 24 * 3600 * 1000);
-      
+    
       while (currentDate.getTime() <= dueDate.getTime()) {
         if (currentDate.getDay() != 0 && currentDate.getDay() != 6) workDays += 1;
         currentDate.setDate(currentDate.getDate() + 1);
       }
       var plannedDailyHours = maxHours / workDays;
-      
+    
       var data = new google.visualization.DataTable();
       data.addColumn('date', 'Time');
       data.addColumn('number', 'Planned');
