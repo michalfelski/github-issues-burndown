@@ -64,6 +64,7 @@ Date.prototype.dateOnly = function() {
 function MainCtrl($scope, Issue, Milestone) {
   var itemsPerRow = 3;
   $scope.graphs = [[]];
+  if (!$.cookie('graphs')) return;
   $(JSON.parse($.cookie('graphs'))).each(function(index, graph){
     var owner = graph.split('/')[0];
     var repo = graph.split('/')[1];
